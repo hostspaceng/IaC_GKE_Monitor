@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: demo-metrics
+  labels:
+    name: demo-metrics
+spec:
+  containers:
+    - name: demo-metrics
+      image: quay.io/brancz/prometheus-example-app:v0.3.0
+      ports:
+        - containerPort: 8080
+          name: demo-metrics
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: demo-metrics-pod-monitor
+  labels:
+    release: prometheus
+spec:
+  podMetricsEndpoints:
+  - port: demo-metrics
+  selector:
+    matchLabels:
+      name: demo-metrics
