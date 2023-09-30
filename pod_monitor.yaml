@@ -4,6 +4,8 @@ metadata:
   name: demo-metrics
   labels:
     name: demo-metrics
+  annotations:
+    prometheus.io/scrape: 'true'
 spec:
   containers:
     - name: demo-metrics

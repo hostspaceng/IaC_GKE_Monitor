@@ -79,12 +79,14 @@ helm install grafana grafana/grafana
 
 ## Step 4: Install Loki
 
-Loki can be installed for log aggregation, making it a great companion for Grafana.
+Loki can be installed for log aggregation, making it a great companion for Grafana. We would use Promtail to collect the logs.
 
 ```shell
-helm install loki loki/loki-stack \
+helm install loki grafana/loki \
   --set loki.auth_enabled=false \
   --set minio.enabled=true
+
+helm install promtail grafana/promtail 
 ```
 
 ## Step 5: Access the Deployed Services
