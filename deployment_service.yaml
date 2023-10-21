@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: challenge-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: challenge
+  template:
+    metadata:
+      labels:
+        app: challenge
+    spec:
+      containers:
+      - name: challenge-container
+        image: gcr.io/hostspacecloud/challenge:latest
+        env:
+        - name: ZONE_ID
+          value: "88212a53b6feba598b197f3508f35b52"
+        - name: CF_API_KEY
+          value: "ab590d1c5d3139416fef3d173ad4267a75a41"
+        - name: CF_API_EMAIL
+          value: "safe@hostspaceng.com"
+        ports:
+        - containerPort: 80
+          name: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: challenge-service
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: http
+    protocol: TCP
+  selector:
+    app: challenge
